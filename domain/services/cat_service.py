@@ -12,3 +12,6 @@ class CatService:
 
     def find_all_cats(self) -> List[Cat]:
         return self.cat_repository.find_cats()
+
+    def create_cat(self, cat: Cat) -> Cat:
+        return self.cat_repository.create_cat(cat=cat)
