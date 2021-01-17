@@ -1,7 +1,15 @@
+from typing import Dict
+
 from flask import jsonify, request
 
 from domain.entities.cat import Cat
 from domain.usecases.cat_usecases import CatUseCase
+
+from marshmallow import Schema, fields, ValidationError
+
+
+class CreateCatSchema(Schema):
+    name = fields.Str(required=True)
 
 
 class CatController:
@@ -13,6 +21,6 @@ class CatController:
         return jsonify(self.cat_use_cases.find_all_cats())
 
     def create_cat(self):
-        cat: Cat = Cat(**request.get_json())
+        data = CreateCatSchema().load(request.get_json())
+        cat: Cat = Cat(**data)
         return jsonify(self.cat_use_cases.create_cat(cat=cat))
-

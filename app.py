@@ -3,9 +3,11 @@ from flask import Flask
 
 import os
 
+from marshmallow import ValidationError
+from werkzeug.exceptions import InternalServerError
+
 from container import HexagonalContainer
-from infrastructure.repositories.cat_repository import CatRepository
-from ui.controllers.cat_controller import CatController
+from infrastructure.errors import marshmallow_error_handler, internal_server_error_handler
 from ui.routes.cat_router import CatRouter
 
 
@@ -17,6 +19,14 @@ class HexagonalApplication:
         self._container = HexagonalContainer()
         self._http_server = Flask(__name__)
         self._set_cat_routes()
+        self._http_server.register_error_handler(
+            InternalServerError,
+            internal_server_error_handler
+        )
+        self._http_server.register_error_handler(
+            ValidationError,
+            marshmallow_error_handler
+        )
 
     def override_dependencies(self, **overriding_providers: Provider):
         self._container.override_providers(**overriding_providers)
