@@ -1,3 +1,12 @@
 certifi==2020.12.5
-
-pymongo~=3.11.2
+click==7.1.2
+dependency-injector==4.10.0
+Flask==1.1.2
+itsdangerous==1.1.0
+Jinja2==2.11.2
+MarkupSafe==1.1.1
+marshmallow==3.10.0
+py-sugo==0.1.0
+pymongo==3.11.2
+six==1.15.0
+Werkzeug==1.0.1
