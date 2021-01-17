@@ -16,12 +16,12 @@ class CatRepository:
         )
         return list(map(lambda c: self._restore(document=c), raw_cats))
 
-    def find_cats_by_id(self, cat_id: str) -> Optional[Cat]:
+    def find_cat_by_id(self, cat_id: str) -> Optional[Cat]:
         raw_cat: Dict = self.mongodb.find_one(
             collection_name=self.collection_name,
             conditions=dict(id=cat_id)
         )
-        return self._restore(**raw_cat) if raw_cat else None
+        return self._restore(document=raw_cat) if raw_cat else None
 
     def create_cat(self, cat: Cat) -> Cat:
         raw_cat: Dict = self.mongodb.insert_one(

@@ -7,7 +7,8 @@ from marshmallow import ValidationError
 from werkzeug.exceptions import InternalServerError
 
 from container import HexagonalContainer
-from infrastructure.errors import marshmallow_error_handler, internal_server_error_handler
+from infrastructure.errors import marshmallow_error_handler, internal_server_error_handler, HexagonalError, \
+    hexagonal_error_handler
 from ui.routes.cat_router import CatRouter
 
 
@@ -26,6 +27,10 @@ class HexagonalApplication:
         self._http_server.register_error_handler(
             ValidationError,
             marshmallow_error_handler
+        )
+        self._http_server.register_error_handler(
+            HexagonalError,
+            hexagonal_error_handler
         )
 
     def override_dependencies(self, **overriding_providers: Provider):

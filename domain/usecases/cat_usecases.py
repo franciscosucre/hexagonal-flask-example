@@ -13,3 +13,6 @@ class CatUseCase:
 
     def create_cat(self, cat: Cat):
         return self.cat_service.create_cat(cat=cat)
+
+    def find_cat(self, id: str):
+        return self.cat_service.find_cat_by_id(id=id)

@@ -10,5 +10,6 @@ class CatRouter:
     def get_routes(self) -> Dict:
         return {
             '/cats': {'view_func': self.cat_controller.find_all_cats, 'methods': ['GET']},
-            '/cats/add': {'view_func': self.cat_controller.create_cat, 'methods': ['POST']}
+            '/cats/add': {'view_func': self.cat_controller.create_cat, 'methods': ['POST']},
+            '/cats/<id>': {'view_func': self.cat_controller.find_cat, 'methods': ['GET']}
         }

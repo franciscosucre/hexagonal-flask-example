@@ -24,3 +24,6 @@ class CatController:
         data = CreateCatSchema().load(request.get_json())
         cat: Cat = Cat(**data)
         return jsonify(self.cat_use_cases.create_cat(cat=cat))
+
+    def find_cat(self, id: str):
+        return jsonify(self.cat_use_cases.find_cat(id=id))

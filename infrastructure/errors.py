@@ -1,23 +1,26 @@
-from typing import Dict
+from typing import Dict, Optional
 
 from marshmallow import ValidationError
-from werkzeug.exceptions import InternalServerError
 
 
-class HexagonalError:
+class HexagonalError(Exception):
     status_code: int
     data: Dict
 
-    def __init__(self, status_code: int = 400, data: Dict = None):
+    def __init__(self, code: str, message: Optional[str] = None, status_code: int = 400, data: Optional[Dict] = None):
         self.data = data if data else dict()
         self.status_code = status_code
+        self.message = message if message else 'An Error has ocurred'
+        self.code = code
 
-    def to_dict(self):
-        return dict(
-            data=self.data,
-            status_code=self.status_code,
-            message='Unexpected Error'
-        )
+
+def hexagonal_error_handler(error: HexagonalError):
+    return dict(
+        data=error.data,
+        status_code=error.status_code,
+        message=error.message,
+        code=error.code
+    )
 
 
 def marshmallow_error_handler(error: ValidationError):
